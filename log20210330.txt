@@ -1,8 +1,0 @@
-2021-03-30 23:59:39.675 +01:00 [INF] Application Is Starting
-2021-03-30 23:59:42.140 +01:00 [INF] Application started. Press Ctrl+C to shut down.
-2021-03-30 23:59:42.156 +01:00 [INF] Hosting environment: Development
-2021-03-30 23:59:42.158 +01:00 [INF] Content root path: C:\Users\MuyiwaOlalekan\source\repos\HotelListing
-2021-03-30 23:59:42.209 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44398/swagger/index.html - -
-2021-03-30 23:59:42.650 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44398/swagger/index.html - - - 200 - text/html;charset=utf-8 448.4249ms
-2021-03-30 23:59:43.797 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44398/swagger/v1/swagger.json - -
-2021-03-30 23:59:44.033 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44398/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 236.2422ms
