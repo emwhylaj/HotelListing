@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using HotelListing.Data;
 using HotelListing.IRepository;
 using Microsoft.EntityFrameworkCore;
-using NPOI.SS.Formula.Functions;
 
 namespace HotelListing.Repository
 {
