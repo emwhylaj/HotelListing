@@ -14,6 +14,7 @@ namespace HotelListing.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApiUsers> _userManager;
+
         private readonly ILogger<AccountController> _logger;
         private readonly IMapper _mapper;
 
@@ -45,8 +46,9 @@ namespace HotelListing.Controllers
                     {
                         ModelState.AddModelError(error.Code, error.Description);
                     }
-                    return BadRequest("$User Registration Attempt Failed");
+                    return BadRequest(ModelState);
                 }
+                await _userManager.AddToRolesAsync(user, userDto.Roles);
                 return Accepted();
             }
             catch (Exception ex)
