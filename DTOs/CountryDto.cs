@@ -19,4 +19,9 @@ namespace HotelListing.DTOs
         public int Id { get; set; }
         public IList<HotelDto> Hotels { get; set; }
     }
+
+    public class UpdateCountryDto : CountryCreateDto
+    {
+        public IList<CreateHotelDto> Hotels { get; set; }
+    }
 }
