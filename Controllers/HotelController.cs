@@ -121,7 +121,7 @@ namespace HotelListing.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPut("{id:int}")]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

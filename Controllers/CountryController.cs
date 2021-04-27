@@ -5,6 +5,7 @@ using AutoMapper;
 using HotelListing.Data;
 using HotelListing.DTOs;
 using HotelListing.IRepository;
+using HotelListing.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +29,13 @@ namespace HotelListing.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCountries()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetCountries([FromBody] RequestParams requestParams)
         {
             try
             {
-                var countries = await _unitOfWork.Countries.GetAll();
+                var countries = await _unitOfWork.Countries.GetPageList(requestParams);
                 var results = _mapper.Map<IList<CountryDto>>(countries);
                 return Ok(results);
             }
@@ -120,7 +123,7 @@ namespace HotelListing.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPut("{id:int}")]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
