@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using AspNetCoreRateLimit;
 using HotelListing.Data;
 using HotelListing.Models;
 using Marvin.Cache.Headers;
@@ -99,6 +101,26 @@ namespace HotelListing
                     validationOpt.MustRevalidate = true;
                 }
                 );
+        }
+
+        public static void ConfigureRateLimiting(this IServiceCollection services)
+        {
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint = "*",
+                    Limit = 1,
+                    Period = " 5s"
+                }
+            };
+            services.Configure<IpRateLimitOptions>(option =>
+            {
+                option.GeneralRules = rateLimitRules;
+            });
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         }
     }
 }

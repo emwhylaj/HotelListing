@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using HotelListing.Configurations;
 using HotelListing.Data;
 using HotelListing.IRepository;
@@ -30,6 +31,10 @@ namespace HotelListing
             options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
 
             );
+            services.AddMemoryCache();
+
+            services.ConfigureRateLimiting();
+            services.AddHttpContextAccessor();
             services.AddResponseCaching();
             services.ConfigureHttpCacheHeader();
             services.AddAuthentication();
@@ -80,6 +85,8 @@ namespace HotelListing
             app.UseRouting();
             app.UseResponseCaching();
             app.UseHttpCacheHeaders();
+
+            app.UseIpRateLimiting();
 
             app.UseAuthorization();
             app.UseAuthentication();
