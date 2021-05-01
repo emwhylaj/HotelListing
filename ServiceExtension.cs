@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +16,8 @@ using Serilog;
 
 namespace HotelListing
 {
+    [ApiVersion("2.0")]
+    [Route("api/country")]
     public static class ServiceExtension
     {
         public static void ConfigureIdentity(this IServiceCollection services)
@@ -66,6 +70,17 @@ namespace HotelListing
                         }.ToString());
                     }
                 });
+            });
+        }
+
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(option =>
+            {
+                option.ReportApiVersions = true;
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+                option.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
         }
     }
