@@ -2,6 +2,7 @@
 using System.Text;
 using HotelListing.Data;
 using HotelListing.Models;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -16,7 +17,7 @@ using Serilog;
 
 namespace HotelListing
 {
-    [ApiVersion("2.0")]
+    [ApiVersion("2.0", Deprecated = true)]
     [Route("api/country")]
     public static class ServiceExtension
     {
@@ -82,6 +83,22 @@ namespace HotelListing
                 option.DefaultApiVersion = new ApiVersion(1, 0);
                 option.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
+        }
+
+        public static void ConfigureHttpCacheHeader(this IServiceCollection services)
+        {
+            services.AddResponseCaching();
+            services.AddHttpCacheHeaders(
+                (expirationOpt) =>
+                {
+                    expirationOpt.MaxAge = 120;
+                    expirationOpt.CacheLocation = CacheLocation.Private;
+                },
+                (validationOpt) =>
+                {
+                    validationOpt.MustRevalidate = true;
+                }
+                );
         }
     }
 }
